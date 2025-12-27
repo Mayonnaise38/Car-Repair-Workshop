@@ -134,3 +134,25 @@ body{
     transform: scale(1.1);
     transition-duration: 0.5s;
 }
+
+@media(max-width: 696px){
+    .heading{
+        flex-wrap: wrap;
+        height: 130px;
+    }
+
+    .choose{
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width: 428px){
+    .heading{
+        flex-wrap: wrap;
+        height: 150px;
+    }
+
+    .choose{
+        grid-template-columns: repeat(1,1fr);
+    }
+}
