@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&family=Lilita+One&family=Yarndings+20&display=swap');
+
+body{
+    background-color: #373A40;
+}
+
+.heading{
+    border-radius: 10px;
+    background-color: #dce2ec;
+    padding: 8px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+}
+
+
+.title{
+    display: flex;
+    align-items: center;
+}
+
+.title a{
+    color:#4c5060;
+    padding-left: 12px;
+    text-decoration: none;
+    font-family: "League Spartan", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 28px;
+    display: block;
+}
+
+.title a:hover{
+    transform: scale(1.05);
+}
+
+.navbar{
+    display: flex;
+    align-items: center;
+}
+
+.navbar > div{
+    position: relative;
+}
+
+.navbar > div a{
+    padding: 13px;
+    color: #727583;
+    text-decoration: none;
+    font-family: "League Spartan", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 18px;
+    display: block;
+}
+
+.navbar > div a:hover{
+    transform: scale(1.1);
+}
+
+.sub_parts, .sub_service, .sub_jobcost, .sub_reports{
+    display: none;
+    position: absolute;
+    background-color: #dce2ec;
+    border-radius: 8px;
+    padding: 8px;
+    margin-top: 2px;
+    z-index: 100;
+}
+
+.navbar > div .sub_parts a,
+.navbar > div .sub_service a,
+.navbar > div .sub_jobcost a,
+.navbar > div .sub_reports a {
+    font-size: 15px;
+}
+
+
+.parts:hover .sub_parts,
+.service:hover .sub_service,
+.jobcost:hover .sub_jobcost,
+.reports:hover .sub_reports {
+    display: block;
+}
+
+.sub_parts:hover .sub_parts,
+.sub_service:hover .sub_service,
+.sub_jobcost:hover .sub_jobcost,
+.sub_reports:hover .sub_reports {
+    display: block;
+}
+
+.imageBox{
+    overflow: hidden;
+    height: 550px;
+    margin-top: 20px;
+}
+
+.imageBox > div:first-child{
+    display: block;
+}
+
+.imageBox > div{
+    display: none;
+    position: relative; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.imageBox > div:target{
+    display: block;
+}
+
+.imageBox img{
+    display: block;
+    margin: auto;
+    width: 90%;
+    height: 550px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.imageBox > div > .pre img{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 8%;
+    top: 50%;
+    text-decoration: none;
+    font-size: 80px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 3px 3px 3px grey;
+    transform: translateY(-50%);
+}
+
+.imageBox > div > .next img{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: 8%;
+    top: 50%;
+    text-decoration: none;
+    font-size: 80px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 3px 3px 3px grey;
+    transform: translateY(-50%);
+}
+
+
+
+.provide_title{
+    text-align: center;
+    color: #dce2ec;
+    font-family: "League Spartan", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.provide{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    text-align: center;
+    margin-top: 20px;
+    font-family: "League Spartan", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 17px;
+}
+
+.provide > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    color: #373A40;
+    background-color:#dce2ec;
+    width: 80%;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+
+.provide > div img {
+    width: 75%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+.provide > div .description{
+    display: none;
+}
+
+.provide > div .description:target{
+    display: block;
+}
+
+.provide > div a{
+    border-radius: 10px;
+    background-color: #373A40;
+    text-decoration: none;
+    color: #dce2ec;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.provide > div a:hover{
+    transform: scale(1.1);
+}
+
+
+
