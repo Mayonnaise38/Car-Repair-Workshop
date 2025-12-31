@@ -180,6 +180,10 @@ body{
     transform: scale(1.1);
 }
 
+.manufacture, .model{
+    text-transform: capitalize;
+}
+
 
 @media(max-width: 696px){
     .heading{

@@ -22,14 +22,16 @@ function renderHistory() {
             <th>IC</th>
             <th>Phone</th>
             <th>Car No Plate</th>
+            <th>Manufacturer</th>
             <th>Model</th>
             <th>Year</th>
             <th>Action</th>
             <th>Driver</th>
+            <th>Delete</th>
         </tr>
     `;
 
-    history.forEach(rec => {
+    history.forEach((rec, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${rec.date}</td>
@@ -38,15 +40,30 @@ function renderHistory() {
             <td>${rec.IC}</td>
             <td>${rec.phone}</td>
             <td>${rec.noPlate}</td>
+            <td>${rec.manufacturer}</td>
             <td>${rec.model}</td>
             <td>${rec.year}</td>
             <td>${rec.action}</td>
             <td>${rec.driverName || 'N/A'}</td>
+            <td><button class="delete-record" data-index="${index}">Delete</button></td>
         `;
         table.appendChild(row);
     });
 
     historyList.appendChild(table);
+
+    // DELETE INDIVIDUAL RECORD
+    const deleteButtons = historyList.querySelectorAll('.delete-record');
+    deleteButtons.forEach(btn => {
+        btn.addEventListener('click', e => {
+            const idx = parseInt(e.target.dataset.index);
+            if (confirm('Are you sure you want to delete this record?')) {
+                history.splice(idx, 1); // remove from array
+                localStorage.setItem('vehicleHistory', JSON.stringify(history));
+                renderHistory(); // refresh table
+            }
+        });
+    });
 }
 
 renderHistory();

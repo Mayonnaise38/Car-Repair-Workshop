@@ -15,7 +15,6 @@ body{
     z-index: 10;
 }
 
-
 .title{
     display: flex;
     align-items: center;
@@ -79,7 +78,6 @@ body{
     font-size: 15px;
 }
 
-
 .parts:hover .sub_parts,
 .service:hover .sub_service,
 .jobcost:hover .sub_jobcost,
@@ -120,11 +118,11 @@ body{
     align-items: center;
 }
 
-
 .record li{
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    border-radius: 6px;
 }
 
 .record span{
@@ -145,6 +143,13 @@ body{
     font-size: 20px;
 }
 
+.vehicle{
+    width: 30%;
+    font-weight: bold;
+    color: #D32F2F;
+    text-align: left;
+}
+
 .delete{
     font-size: 14px;
     padding: 5px;
@@ -163,6 +168,35 @@ button{
 
 button:hover{
     transform: scale(1.1);
+}
+
+/* Added Styles for Sold / Low Stock / Buy Button */
+
+.record li.sold {
+    background-color: #FFEBEE;
+    border: 1px solid #F44336;
+}
+
+.record li.low-stock {
+    background-color: #FFF3E0;
+    border: 1px solid #FF9800;
+}
+
+.buy {
+    background-color: #2196F3;
+    color: #fff;
+    font-weight: 700;
+}
+
+.buy:hover {
+    background-color: #1976D2;
+}
+
+.sales{
+    font-family: "Comic Relief", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
 }
 
 @media(max-width: 428px){

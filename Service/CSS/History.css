@@ -175,18 +175,6 @@ tr:hover{
     transform: scale(1.05);
 }
 
-
-@media (max-width: 768px){
-    h1{
-        font-size: 26px;
-    }
-
-    td, th{
-        font-size: 13px;
-        padding: 8px;
-    }
-}
-
 @media(max-width: 696px){
     .heading{
         flex-wrap: wrap;

@@ -1,4 +1,3 @@
-// Get form and inputs
 const form = document.getElementById('carForm');
 
 const ownerName = document.getElementById('ownerName');
@@ -6,81 +5,186 @@ const insurance = document.getElementById('insurance');
 const IC = document.getElementById('IC');
 const phone = document.getElementById('phone');
 const noPlate = document.getElementById('noPlate');
+const manufacturer = document.getElementById('manufacturer');
 const model = document.getElementById('model');
 const year = document.getElementById('year');
 const action = document.getElementById('action');
 const driverName = document.getElementById('driverName');
 
-form.addEventListener('submit', function (e) {
-    e.preventDefault(); // prevent default form submission
+/* ===== IC FORMAT ===== */
+IC.addEventListener('input', () => {
+    let value = IC.value.replace(/\D/g, '');
+    if (value.length > 12) value = value.slice(0, 12);
 
-    // Validation
-    if (ownerName.value.trim() === '') {
-        alert("Please enter owner's name");
-        ownerName.focus();
-        return;
+    if (value.length > 6 && value.length <= 8) {
+        value = value.slice(0, 6) + '-' + value.slice(6);
+    } else if (value.length > 8) {
+        value = value.slice(0, 6) + '-' + value.slice(6, 8) + '-' + value.slice(8);
     }
-    if (insurance.value === '') {
-        alert("Please select insurance");
-        insurance.focus();
-        return;
-    }
-    if (IC.value.trim() === '') {
-        alert("Please enter IC number");
-        IC.focus();
-        return;
-    }
-    if (phone.value.trim() === '') {
-        alert("Please enter phone number");
-        phone.focus();
-        return;
-    }
-    if (noPlate.value.trim() === '') {
-        alert("Please enter car number plate");
-        noPlate.focus();
-        return;
-    }
-    if (model.value.trim() === '') {
-        alert("Please enter car model");
-        model.focus();
-        return;
-    }
-    if (year.value.trim() === '') {
-        alert("Please enter year");
-        year.focus();
-        return;
-    }
-    if (action.value === '') {
-        alert("Please select an action");
-        action.focus();
-        return;
-    }
+    IC.value = value;
+});
 
-    // Create record object
+/* ===== PHONE FORMAT ===== */
+phone.addEventListener('input', () => {
+    let value = phone.value.replace(/\D/g, '');
+    if (value.length > 11) value = value.slice(0, 11);
+    if (value.length > 3) value = value.slice(0, 3) + '-' + value.slice(3);
+    phone.value = value;
+});
+
+/* ===== YEAR ===== */
+year.addEventListener('input', () => {
+    let value = year.value.replace(/\D/g, '');
+    if (value.length > 4) value = value.slice(0, 4);
+    year.value = value;
+});
+
+/* ===== CAPITALIZE ===== */
+function capitalizeWords(text) {
+    return text
+        .toLowerCase()
+        .split(' ')
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ');
+}
+
+/* ===== SPARE PARTS DATA ===== */
+const spareParts = {
+    "Engine & Transmission": [
+        "Spark plugs",
+        "Timing belt",
+        "Oil filter",
+        "Fuel pump",
+        "Engine pistons",
+        "Clutch plate"
+    ],
+    "Electrical & Electronics": [
+        "Battery",
+        "Alternator",
+        "Starter motor",
+        "Oxygen sensor",
+        "Engine Control Unit",
+        "Fuse box"
+    ],
+    "Brake & Suspension": [
+        "Brake pads",
+        "Brake discs",
+        "Shock absorbers",
+        "Coil springs",
+        "Brake calipers",
+        "Anti-roll bar"
+    ],
+    "Cooling & Heating": [
+        "Radiator",
+        "Water pump",
+        "Thermostat",
+        "Heater core",
+        "Cooling fan",
+        "Radiator hose"
+    ],
+    "Lighting & Visibility": [
+        "Headlight bulbs",
+        "Tail light bulbs",
+        "Fog lights",
+        "Windshield wiper blades",
+        "Turn signal indicators",
+        "Headlight lens"
+    ],
+    "Body & Interior": [
+        "Side mirrors",
+        "Door handles",
+        "Dashboard",
+        "Seats",
+        "Bumpers",
+        "Seat belts"
+    ]
+};
+
+
+/* ===== FORM SUBMIT ===== */
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // VALIDATION
+    if (!ownerName.value.trim()) return alert("Please enter owner's name");
+    if (!insurance.value) return alert("Please select insurance");
+    if (!/^\d{6}-\d{2}-\d{4}$/.test(IC.value)) return alert("IC format: 000000-00-0000");
+    if (!phone.value.trim()) return alert("Please enter phone number");
+    if (!noPlate.value.trim()) return alert("Please enter car number plate");
+    if (!manufacturer.value.trim()) return alert("Please enter car manufacturer");
+    if (!model.value.trim()) return alert("Please enter car model");
+    if (!year.value.trim()) return alert("Please enter year");
+    if (!action.value) return alert("Please select an action");
+
+    // RECORD FOR HISTORY.HTML
     const record = {
+        date: new Date().toLocaleString(),
         ownerName: ownerName.value.trim(),
         insurance: insurance.value,
         IC: IC.value.trim(),
         phone: phone.value.trim(),
-        noPlate: noPlate.value.trim(),
-        model: model.value.trim(),
+        noPlate: noPlate.value.trim().toUpperCase(),
+        manufacturer: capitalizeWords(manufacturer.value.trim()),
+        model: capitalizeWords(model.value.trim()),
         year: year.value.trim(),
         action: action.value,
-        driverName: driverName.value.trim() || 'N/A',
-        date: new Date().toLocaleString()
+        driverName: driverName.value.trim() || 'N/A'
     };
 
-    // Get existing history from localStorage
-    let history = JSON.parse(localStorage.getItem('vehicleHistory')) || [];
+    let vehicleHistory = JSON.parse(localStorage.getItem('vehicleHistory')) || [];
+    vehicleHistory.push(record);
+    localStorage.setItem('vehicleHistory', JSON.stringify(vehicleHistory));
 
-    // Add new record
-    history.push(record);
+    // IF BUY SPARE PARTS, SAVE TO PartsHistory.html
+    if (action.value === "Buy Spare Parts") {
+        selectSpareParts(record.noPlate);
+    } else {
+        alert("Form submitted successfully!");
+    }
 
-    // Save back to localStorage
-    localStorage.setItem('vehicleHistory', JSON.stringify(history));
-
-    alert("Form submitted successfully!");
-
-    // Clear form
     form.reset();
 });
+
+/* ===== SPARE PARTS SELECTION ===== */
+function selectSpareParts(carPlate) {
+    const categories = Object.keys(spareParts);
+    let categoryList = categories.map((c, i) => `${i+1}. ${c}`).join('\n');
+    let categoryChoice = prompt("Select Category:\n" + categoryList);
+
+    if (!categoryChoice) return;
+    const catIndex = parseInt(categoryChoice) - 1;
+    if (isNaN(catIndex) || !categories[catIndex]) return alert("Invalid category selection");
+
+    const category = categories[catIndex];
+    const items = spareParts[category];
+    let itemsList = items.map((i, idx) => `${idx+1}. ${i}`).join('\n');
+    let itemChoice = prompt("Select Spare Part:\n" + itemsList);
+
+    if (!itemChoice) return;
+    const itemIndex = parseInt(itemChoice) - 1;
+    if (isNaN(itemIndex) || !items[itemIndex]) return alert("Invalid spare part selection");
+
+    const item = items[itemIndex];
+
+    const qtyInput = prompt("Quantity to buy:");
+    const qty = parseInt(qtyInput, 10);
+    if (isNaN(qty) || qty <= 0) return alert("Invalid quantity");
+
+    const priceInput = prompt("Selling Price (RM):");
+    const price = parseFloat(priceInput);
+    if (isNaN(price) || price <= 0) return alert("Invalid price");
+
+    // SAVE TO sparePartsHistory
+    let partsHistory = JSON.parse(localStorage.getItem('sparePartsHistory')) || [];
+    partsHistory.push({
+        date: new Date().toLocaleString(),
+        carPlate,
+        category,
+        item,
+        quantity: qty,
+        price
+    });
+    localStorage.setItem('sparePartsHistory', JSON.stringify(partsHistory));
+
+    alert(`Spare part purchase recorded!\nCar: ${carPlate}\n${category} → ${item}`);
+}
