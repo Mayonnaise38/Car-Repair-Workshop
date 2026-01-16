@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Cost Calculator</title>
+    <link rel="icon" href="../ICON/Cost.svg">
+    <link rel="stylesheet" href="CSS/Calculator.css">
+</head>
+<body>
+    <div class="heading">
+        <div class="title">
+            <a href="../Homepage.html">CAR REPAIR WORKSHOP</a>
+            
+        </div>
+
+        <div class="navbar">
+            <div class="parts">
+                <a href="../Parts/Parts.html">Parts Inventory</a>
+                <div class="sub_parts">
+                    <a href="../Parts/Engine.html">Engine & Transmission Parts</a>
+                    <a href="../Parts/Electronic.html">Electrical & Electronics Parts</a>
+                    <a href="../Parts/Brake.html">Brake & Suspension Parts</a>
+                    <a href="../Parts/Cooling.html">Cooling & Heating System Parts</a>
+                    <a href="../Parts/Lighting.html">Lighting & Visibility Parts</a>
+                    <a href="../Parts/Body.html">Body & Interior Parts</a>
+                </div>
+            </div>
+
+            <div class="service">
+                <a href="../Service/Service.html">Vehicle Service</a>
+                <div class="sub_service">
+                    <a href="../Service/History.html">Vehicle Service History</a>
+                    <a href="../Service/Reminder.html">Service Reminder</a>
+                    <a href="../Service/PartsHistory.html">Spare Parts History</a>
+                </div>
+            </div>
+
+            <div class="jobcost">
+                <a href="Jobcost.html">Job Cost</a>
+                <div class="sub_jobcost">
+                    <a href="Cost.html">Cost</a>
+                    <a href="Calculator.html">Calculator</a>
+                </div>
+            </div>
+
+            <div class="reports">
+                <a href="../Reports/Reports.html">Digital Inspections</a>
+                <div class="sub_reports">
+                    <a href="../Reports/Record.html">History & Record</a>
+                </div>
+            </div>
+
+            <div class="about">
+                <a href="../About.html">ⓘ</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="calculator">
+
+        <div class="type-buttons">
+            <button onclick="selectType('service')">🔧 Service</button>
+            <button onclick="selectType('windscreen')">🪟 Windscreen</button>
+            <button onclick="selectType('spareparts')">🧰 Spare Parts</button>
+        </div>
+
+        <div class="panel" id="servicePanel">
+            <h2>Vehicle Service</h2>
+
+            <label>
+                Service Type:
+                <select id="serviceType">
+                    <option value="0">Select</option>
+                    <option value="150">1st Service (RM150)</option>
+                    <option value="250">2nd Service (RM250)</option>
+                    <option value="350">3rd Service (RM350)</option>
+                    <option value="500">Major / Other (RM500)</option>
+                </select>
+            </label>
+
+            <label>
+                Extra Cost (RM):
+                <input type="number" id="serviceExtra" value="0">
+            </label>
+
+            <button onclick="addService()">Add Service Cost</button>
+        </div>
+
+        <div class="panel" id="windscreenPanel">
+            <h2>Windscreen Replacement</h2>
+
+            <label>
+                Vehicle Type:
+                <select id="windscreenType">
+                    <option value="0">Select</option>
+                    <option value="180">Small Car (RM180)</option>
+                    <option value="280">Big Car (RM280)</option>
+                    <option value="450">Lorry / Truck (RM450)</option>
+                </select>
+            </label>
+
+            <label>
+                Extra Cost (RM):
+                <input type="number" id="windscreenExtra" value="0">
+            </label>
+
+            <button onclick="addWindscreen()">Add Windscreen Cost</button>
+        </div>
+
+        <div class="panel" id="sparepartsPanel">
+            <h2>Spare Parts Installation</h2>
+
+            <label>
+                Number of Items:
+                <select id="partsCount">
+                    <option value="0">Select</option>
+                    <option value="50">1 Item (RM50)</option>
+                    <option value="90">2 Items (RM90)</option>
+                    <option value="120">3 Items (RM120)</option>
+                    <option value="more">More than 3</option>
+                </select>
+            </label>
+
+            <label>
+                Extra Items (for more than 3):
+                <input type="number" id="extraItems" value="0">
+            </label>
+
+            <label>
+                Extra Cost (RM):
+                <input type="number" id="partsExtra" value="0">
+            </label>
+
+            <button onclick="addSpareParts()">Add Spare Parts Cost</button>
+        </div>
+
+        <div class="total">
+            <h2>Total Amount: RM <span id="totalAmount">0</span></h2>
+            <button class="reset" onclick="resetCalculator()">Reset</button>
+        </div>
+
+    </div>
+
+    <script src="Calculator.js"></script>
+
+</body>
+</html>

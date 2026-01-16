@@ -24,11 +24,18 @@ IC.addEventListener('input', () => {
     IC.value = value;
 });
 
-/* ===== PHONE FORMAT ===== */
+/* ===== PHONE FORMAT (10–11 DIGITS ONLY) ===== */
 phone.addEventListener('input', () => {
     let value = phone.value.replace(/\D/g, '');
+
+    // Limit max to 11 digits
     if (value.length > 11) value = value.slice(0, 11);
-    if (value.length > 3) value = value.slice(0, 3) + '-' + value.slice(3);
+
+    // Format XXX-XXXXXXX or XXX-XXXXXXXX
+    if (value.length > 3) {
+        value = value.slice(0, 3) + '-' + value.slice(3);
+    }
+
     phone.value = value;
 });
 
@@ -100,16 +107,22 @@ const spareParts = {
     ]
 };
 
-
 /* ===== FORM SUBMIT ===== */
 form.addEventListener('submit', function(e) {
     e.preventDefault();
+
+    const rawPhone = phone.value.replace(/\D/g, '');
 
     // VALIDATION
     if (!ownerName.value.trim()) return alert("Please enter owner's name");
     if (!insurance.value) return alert("Please select insurance");
     if (!/^\d{6}-\d{2}-\d{4}$/.test(IC.value)) return alert("IC format: 000000-00-0000");
-    if (!phone.value.trim()) return alert("Please enter phone number");
+
+    // PHONE VALIDATION (10–11 digits)
+    if (rawPhone.length < 10 || rawPhone.length > 11) {
+        return alert("Phone number must be 10 or 11 digits");
+    }
+
     if (!noPlate.value.trim()) return alert("Please enter car number plate");
     if (!manufacturer.value.trim()) return alert("Please enter car manufacturer");
     if (!model.value.trim()) return alert("Please enter car model");
@@ -135,7 +148,7 @@ form.addEventListener('submit', function(e) {
     vehicleHistory.push(record);
     localStorage.setItem('vehicleHistory', JSON.stringify(vehicleHistory));
 
-    // IF BUY SPARE PARTS, SAVE TO PartsHistory.html
+    // IF BUY SPARE PARTS
     if (action.value === "Buy Spare Parts") {
         selectSpareParts(record.noPlate);
     } else {
@@ -148,43 +161,40 @@ form.addEventListener('submit', function(e) {
 /* ===== SPARE PARTS SELECTION ===== */
 function selectSpareParts(carPlate) {
     const categories = Object.keys(spareParts);
-    let categoryList = categories.map((c, i) => `${i+1}. ${c}`).join('\n');
+    let categoryList = categories.map((c, i) => `${i + 1}. ${c}`).join('\n');
     let categoryChoice = prompt("Select Category:\n" + categoryList);
 
     if (!categoryChoice) return;
     const catIndex = parseInt(categoryChoice) - 1;
-    if (isNaN(catIndex) || !categories[catIndex]) return alert("Invalid category selection");
+    if (!categories[catIndex]) return alert("Invalid category");
 
     const category = categories[catIndex];
     const items = spareParts[category];
-    let itemsList = items.map((i, idx) => `${idx+1}. ${i}`).join('\n');
+
+    let itemsList = items.map((i, idx) => `${idx + 1}. ${i}`).join('\n');
     let itemChoice = prompt("Select Spare Part:\n" + itemsList);
 
     if (!itemChoice) return;
     const itemIndex = parseInt(itemChoice) - 1;
-    if (isNaN(itemIndex) || !items[itemIndex]) return alert("Invalid spare part selection");
+    if (!items[itemIndex]) return alert("Invalid spare part");
 
-    const item = items[itemIndex];
-
-    const qtyInput = prompt("Quantity to buy:");
-    const qty = parseInt(qtyInput, 10);
+    const qty = parseInt(prompt("Quantity to buy:"), 10);
     if (isNaN(qty) || qty <= 0) return alert("Invalid quantity");
 
-    const priceInput = prompt("Selling Price (RM):");
-    const price = parseFloat(priceInput);
+    const price = parseFloat(prompt("Selling Price (RM):"));
     if (isNaN(price) || price <= 0) return alert("Invalid price");
 
-    // SAVE TO sparePartsHistory
     let partsHistory = JSON.parse(localStorage.getItem('sparePartsHistory')) || [];
     partsHistory.push({
         date: new Date().toLocaleString(),
         carPlate,
         category,
-        item,
+        item: items[itemIndex],
         quantity: qty,
         price
     });
+
     localStorage.setItem('sparePartsHistory', JSON.stringify(partsHistory));
 
-    alert(`Spare part purchase recorded!\nCar: ${carPlate}\n${category} → ${item}`);
+    alert(`Spare part purchase recorded!\nCar: ${carPlate}\n${category} → ${items[itemIndex]}`);
 }

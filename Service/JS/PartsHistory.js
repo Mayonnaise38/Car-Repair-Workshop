@@ -1,7 +1,6 @@
 const container = document.getElementById('partsHistory');
 let history = JSON.parse(localStorage.getItem('sparePartsHistory')) || [];
 
-/* ================= DISPLAY FUNCTION ================= */
 function displayPartsHistory() {
     container.innerHTML = '';
 
@@ -41,13 +40,11 @@ function displayPartsHistory() {
 
     container.appendChild(table);
 
-    /* ================= DELETE FUNCTION ================= */
     const deleteButtons = container.querySelectorAll('.delete');
     deleteButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
             const idx = parseInt(e.target.dataset.index);
 
-            // 1. Remove from inventory sales
             const categoryName = history[idx].category;
             const partName = history[idx].item;
 
@@ -56,7 +53,7 @@ function displayPartsHistory() {
 
             inventory.forEach(part => {
                 if (part.supplier === partName && part.sales) {
-                    // Remove the matching sale by carPlate & quantity & price
+
                     part.sales = part.sales.filter(sale =>
                         !(sale.plate === history[idx].carPlate &&
                           sale.qty === history[idx].quantity &&
@@ -67,15 +64,12 @@ function displayPartsHistory() {
 
             localStorage.setItem(inventoryKey, JSON.stringify(inventory));
 
-            // 2. Remove from sparePartsHistory
             history.splice(idx, 1);
             localStorage.setItem('sparePartsHistory', JSON.stringify(history));
 
-            // 3. Refresh table
             displayPartsHistory();
         });
     });
 }
 
-/* ================= INITIAL DISPLAY ================= */
 displayPartsHistory();

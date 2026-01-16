@@ -31,14 +31,12 @@ function displayRecord(part, record) {
             <div class="sales"></div>
         `;
 
-        /* ===== DELETE STOCK ===== */
         li.querySelector('.delete').addEventListener('click', () => {
             record.splice(index, 1);
             localStorage.setItem(getStorageKey(part), JSON.stringify(record));
             displayRecord(part, record);
         });
 
-        /* ===== SELL PART ===== */
         li.querySelector('.sell').addEventListener('click', () => {
             if (x.amount <= 0) {
                 alert('No stock left');
@@ -60,24 +58,20 @@ function displayRecord(part, record) {
                 return;
             }
 
-            /* ===== UPDATE STOCK ===== */
             x.amount -= qty;
 
-            /* ===== SAVE SALES INSIDE INVENTORY ONLY ===== */
             if (!x.sales) x.sales = [];
-            const saleRecord = {
+            x.sales.push({
                 plate: plate.toUpperCase(),
                 qty,
                 sellPrice,
                 date: new Date().toLocaleString()
-            };
-            x.sales.push(saleRecord);
+            });
 
             localStorage.setItem(getStorageKey(part), JSON.stringify(record));
             displayRecord(part, record);
         });
 
-        /* ===== SHOW SALES HISTORY ===== */
         const salesDiv = li.querySelector('.sales');
         if (x.sales && x.sales.length > 0) {
             x.sales.forEach((sale, saleIndex) => {
@@ -93,10 +87,9 @@ function displayRecord(part, record) {
                     ---------------------------------------
                 `;
 
-                // DELETE INDIVIDUAL SALE
                 saleRow.querySelector('.delete-sale').addEventListener('click', () => {
                     x.sales.splice(saleIndex, 1);
-                    x.amount += sale.qty; // restore stock
+                    x.amount += sale.qty;
                     localStorage.setItem(getStorageKey(part), JSON.stringify(record));
                     displayRecord(part, record);
                 });
@@ -111,7 +104,6 @@ function displayRecord(part, record) {
     part.querySelector('.amount').textContent = amountTotal;
 }
 
-/* ===== INIT ===== */
 spareparts.forEach(part => {
     const details = part.querySelector('.details');
     const toggle = part.querySelector('.toggle');

@@ -52,7 +52,6 @@ function renderHistory() {
 
     historyList.appendChild(table);
 
-    // DELETE INDIVIDUAL RECORD
     const deleteButtons = historyList.querySelectorAll('.delete-record');
     deleteButtons.forEach(btn => {
         btn.addEventListener('click', e => {

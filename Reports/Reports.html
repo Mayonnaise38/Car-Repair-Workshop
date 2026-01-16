@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Inspection Report</title>
+    <link rel="stylesheet" href="CSS/Reports.css">
+    <link rel="icon" href="../ICON/Report.svg">
+</head>
+<body>
+    <div class="heading">
+        <div class="title">
+            <a href="../Homepage.html">CAR REPAIR WORKSHOP</a>
+        </div>
+
+        <div class="navbar">
+            <div class="parts">
+                <a href="../Parts/Parts.html">Parts Inventory</a>
+                <div class="sub_parts">
+                    <a href="../Parts/Engine.html">Engine & Transmission Parts</a>
+                    <a href="../Parts/Electronic.html">Electrical & Electronics Parts</a>
+                    <a href="../Parts/Brake.html">Brake & Suspension Parts</a>
+                    <a href="../Parts/Cooling.html">Cooling & Heating System Parts</a>
+                    <a href="../Parts/Lighting.html">Lighting & Visibility Parts</a>
+                    <a href="../Parts/Body.html">Body & Interior Parts</a>
+                </div>
+            </div>
+
+            <div class="service">
+                <a href="../Service/Service.html">Vehicle Service</a>
+                <div class="sub_service">
+                    <a href="../Service/History.html">Vehicle Service History</a>
+                    <a href="../Service/Reminder.html">Service Reminder</a>
+                    <a href="../Service/PartsHistory.html">Spare Parts History</a>
+                </div>
+            </div>
+
+            <div class="jobcost">
+                <a href="../Jobcost/Jobcost.html">Job Cost</a>
+                <div class="sub_jobcost">
+                    <a href="../Jobcost/Cost.html">Cost</a>
+                    <a href="../Jobcost/Calculator.html">Calculator</a>
+                </div>
+            </div>
+
+            <div class="reports">
+                <a href="../Reports/Reports.html">Digital Inspections</a>
+                <div class="sub_reports">
+                    <a href="../Reports/Record.html">History & Record</a>
+                </div>
+            </div>
+
+            <div class="about">
+                <a href="../About.html">ⓘ</a>
+            </div>
+        </div>
+    </div>
+
+    <h1>Digital Vehicle Inspection</h1>
+
+    <form id="inspectionForm">
+
+        <div class="box">
+            <h2>Vehicle Information</h2>
+
+            <label>Car Plate</label>
+            <input type="text" id="plate" required style="width: 90%;">
+
+            <label>Owner Name</label>
+            <input type="text" id="owner" required style="width: 90%;">
+
+            <label>Date</label>
+            <input type="date" id="date" required style="width: 90%;">
+        </div>
+
+        <div class="box">
+            <h2>Inspection Checklist</h2>
+
+            <label><input type="checkbox" value="Engine Oil"> Engine Oil</label>
+            <label><input type="checkbox" value="Brake System"> Brake System</label>
+            <label><input type="checkbox" value="Tyres"> Tyres</label>
+            <label><input type="checkbox" value="Battery"> Battery</label>
+            <label><input type="checkbox" value="Lights"> Lights</label>
+            <label><input type="checkbox" value="Suspension"> Suspension</label>
+        </div>
+
+        <div class="box">
+            <h2>Inspector Notes</h2>
+            <textarea id="notes" placeholder="Write inspection notes..."></textarea>
+        </div>
+
+        <button type="submit">Save Inspection Report</button>
+
+    </form>
+
+    <a class="link" href="Record.html">📂 View Inspection History</a>
+
+    <script src="Reports.js"></script>
+</body>
+</html>

@@ -107,5 +107,18 @@ body{
     border-radius: 20px;
 }
 
+@media(max-width: 696px){
+    .heading{
+        flex-wrap: wrap;
+        height: 130px;
+    }
+}
+
+@media(max-width: 428px){
+    .heading{
+        flex-wrap: wrap;
+        height: 150px;
+    }
+}
 
 

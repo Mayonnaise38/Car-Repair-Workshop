@@ -231,5 +231,9 @@ body{
         flex-wrap: wrap;
         height: 150px;
     }
+
+    .provide{
+        grid-template-columns: repeat(1,1fr);
+    }
 }
 
