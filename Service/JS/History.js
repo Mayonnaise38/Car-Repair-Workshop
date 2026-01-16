@@ -57,9 +57,9 @@ function renderHistory() {
         btn.addEventListener('click', e => {
             const idx = parseInt(e.target.dataset.index);
             if (confirm('Are you sure you want to delete this record?')) {
-                history.splice(idx, 1); // remove from array
+                history.splice(idx, 1); 
                 localStorage.setItem('vehicleHistory', JSON.stringify(history));
-                renderHistory(); // refresh table
+                renderHistory(); 
             }
         });
     });
