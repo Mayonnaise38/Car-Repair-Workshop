@@ -11,7 +11,6 @@ const year = document.getElementById('year');
 const action = document.getElementById('action');
 const driverName = document.getElementById('driverName');
 
-/* ===== IC FORMAT ===== */
 IC.addEventListener('input', () => {
     let value = IC.value.replace(/\D/g, '');
     if (value.length > 12) value = value.slice(0, 12);
@@ -24,14 +23,11 @@ IC.addEventListener('input', () => {
     IC.value = value;
 });
 
-/* ===== PHONE FORMAT (10–11 DIGITS ONLY) ===== */
 phone.addEventListener('input', () => {
     let value = phone.value.replace(/\D/g, '');
 
-    // Limit max to 11 digits
     if (value.length > 11) value = value.slice(0, 11);
 
-    // Format XXX-XXXXXXX or XXX-XXXXXXXX
     if (value.length > 3) {
         value = value.slice(0, 3) + '-' + value.slice(3);
     }
@@ -39,14 +35,12 @@ phone.addEventListener('input', () => {
     phone.value = value;
 });
 
-/* ===== YEAR ===== */
 year.addEventListener('input', () => {
     let value = year.value.replace(/\D/g, '');
     if (value.length > 4) value = value.slice(0, 4);
     year.value = value;
 });
 
-/* ===== CAPITALIZE ===== */
 function capitalizeWords(text) {
     return text
         .toLowerCase()
@@ -55,7 +49,6 @@ function capitalizeWords(text) {
         .join(' ');
 }
 
-/* ===== SPARE PARTS DATA ===== */
 const spareParts = {
     "Engine & Transmission": [
         "Spark plugs",
@@ -107,18 +100,15 @@ const spareParts = {
     ]
 };
 
-/* ===== FORM SUBMIT ===== */
 form.addEventListener('submit', function(e) {
     e.preventDefault();
 
     const rawPhone = phone.value.replace(/\D/g, '');
 
-    // VALIDATION
     if (!ownerName.value.trim()) return alert("Please enter owner's name");
     if (!insurance.value) return alert("Please select insurance");
     if (!/^\d{6}-\d{2}-\d{4}$/.test(IC.value)) return alert("IC format: 000000-00-0000");
 
-    // PHONE VALIDATION (10–11 digits)
     if (rawPhone.length < 10 || rawPhone.length > 11) {
         return alert("Phone number must be 10 or 11 digits");
     }
@@ -129,7 +119,6 @@ form.addEventListener('submit', function(e) {
     if (!year.value.trim()) return alert("Please enter year");
     if (!action.value) return alert("Please select an action");
 
-    // RECORD FOR HISTORY.HTML
     const record = {
         date: new Date().toLocaleString(),
         ownerName: ownerName.value.trim(),
@@ -148,7 +137,6 @@ form.addEventListener('submit', function(e) {
     vehicleHistory.push(record);
     localStorage.setItem('vehicleHistory', JSON.stringify(vehicleHistory));
 
-    // IF BUY SPARE PARTS
     if (action.value === "Buy Spare Parts") {
         selectSpareParts(record.noPlate);
     } else {
@@ -158,7 +146,6 @@ form.addEventListener('submit', function(e) {
     form.reset();
 });
 
-/* ===== SPARE PARTS SELECTION ===== */
 function selectSpareParts(carPlate) {
     const categories = Object.keys(spareParts);
     let categoryList = categories.map((c, i) => `${i + 1}. ${c}`).join('\n');
